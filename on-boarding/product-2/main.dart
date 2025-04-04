@@ -37,82 +37,76 @@ void main() {
     String? command = stdin.readLineSync();
     print("");
 
-    if (command?.toLowerCase() == "new") {
-      print("enter product name");
-      String? name = stdin.readLineSync();
+    switch (command) {
+      case "new":
+        print("Enter product name:");
+        String? name = stdin.readLineSync();
 
-      print("enter product price");
-      String? price = stdin.readLineSync();
+        print("Enter product price:");
+        String? price = stdin.readLineSync();
+        int parsedPrice = _parsePrice(price);
 
-      late int parsedPrice;
+        print("Enter product description:");
+        String? description = stdin.readLineSync();
 
-      while (true) {
-        try {
-          parsedPrice = int.parse(price != null && price != "" ? price : "0");
-          break;
-        } on FormatException catch (_) {
-          print("please enter a correct price number");
-          price = stdin.readLineSync();
-        }
-      }
+        productManager.addProduct(
+          parsedPrice,
+          name ?? "",
+          description: description ?? "",
+        );
+        break;
 
-      print("enter product description");
-      String? description = stdin.readLineSync();
+      case "view all":
+        productManager.viewAllProducts();
+        break;
 
-      productManager.addProduct(
-        parsedPrice,
-        name ?? "",
-        description: description ?? "",
-      );
-    } else if (command?.toLowerCase() == "view all") {
-      productManager.viewAllProducts();
-    } else if (command?.toLowerCase() == "view") {
-      print("enter product name");
+      case "view":
+        print("Enter product name:");
+        String? productName = stdin.readLineSync();
+        productManager.viewProduct(productName: productName);
+        break;
 
-      String? productName = stdin.readLineSync();
+      case "edit":
+        print("Enter the name of the product you want to edit:");
+        String? productName = stdin.readLineSync();
 
-      productManager.viewProduct(productName: productName);
-    } else if (command?.toLowerCase() == "edit") {
-      print("enter name of the product you want to edit");
-      String? productName = stdin.readLineSync();
+        print("Enter product name or leave blank to keep it unchanged:");
+        String? name = stdin.readLineSync();
 
-      print("enter product name or leave blank if you don't want to edit it");
-      String? name = stdin.readLineSync();
+        print("Enter product price or leave blank to keep it unchanged:");
+        String? price = stdin.readLineSync();
+        int parsedPrice = _parsePrice(price);
 
-      print("enter product price or leave blank if you don't want to edit it");
-      String? price = stdin.readLineSync();
+        print("Enter product description or leave blank to keep it unchanged:");
+        String? description = stdin.readLineSync();
 
-      late int parsedPrice;
+        productManager.editProduct(
+          productName ?? "",
+          price: parsedPrice,
+          name: name ?? "",
+          description: description ?? "",
+        );
+        break;
 
-      while (true) {
-        try {
-          parsedPrice = int.parse(price != null && price != "" ? price : "0");
-          break;
-        } on FormatException catch (_) {
-          print("please enter a correct price number");
-          price = stdin.readLineSync();
-        }
-      }
+      case "delete":
+        print("Enter product name:");
+        String? productName = stdin.readLineSync();
+        productManager.deleteProduct(productName: productName);
+        break;
 
-      print(
-        "enter product description or leave blank if you don't want to edit it",
-      );
-      String? description = stdin.readLineSync();
+      default:
+        print("Please enter a known command.");
+    }
+  }
+}
 
-      productManager.editProduct(
-        productName ?? "",
-        price: parsedPrice,
-        name: name ?? "",
-        description: description ?? "",
-      );
-    } else if (command?.toLowerCase() == "delete") {
-      print("enter product name");
-
-      String? productName = stdin.readLineSync();
-
-      productManager.deleteProduct(productName: productName);
-    } else {
-      print("Plase enter a known command");
+int _parsePrice(String? price) {
+  while (true) {
+    try {
+      return int.parse(price != null && price.isNotEmpty ? price : "0");
+    } on FormatException {
+      print("Please enter a correct price number:");
+      price = stdin.readLineSync();
     }
   }
 }
