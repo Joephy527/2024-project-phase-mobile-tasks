@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:yoseph_ephrem/data.dart';
+import 'package:yoseph_ephrem/features/product/domain/entities/product.dart';
 
 import 'package:yoseph_ephrem/theme.dart';
 
 class AddProduct extends StatelessWidget {
   const AddProduct({super.key, this.product});
 
-  final CardItem? product;
+  final Product? product;
 
   bool get isEditing => product != null;
 
@@ -65,7 +66,7 @@ class AddProduct extends StatelessWidget {
 }
 
 class AddProductBody extends StatefulWidget {
-  final CardItem? product;
+  final Product? product;
 
   const AddProductBody({super.key, this.product});
 
@@ -84,7 +85,7 @@ class _AddProductBodyState extends State<AddProductBody> {
   void initState() {
     super.initState();
     if (widget.product != null) {
-      _nameController.text = widget.product?.title ?? '';
+      _nameController.text = widget.product?.name ?? '';
       _categoryController.text = widget.product?.category ?? "";
       _priceController.text = widget.product?.price.toString() ?? '';
       _descriptionController.text = widget.product?.description ?? '';
@@ -314,9 +315,10 @@ class _AddProductBodyState extends State<AddProductBody> {
                         final price = int.parse(_priceController.text);
                         final description = _descriptionController.text;
 
-                        final newItem = CardItem(
+                        final newItem = Product(
                           id: widget.product?.id ?? productData.data.length + 1,
-                          title: name,
+                          imageUrl: "",
+                          name: name,
                           price: price,
                           category: category,
                           description: description,

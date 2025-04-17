@@ -9,6 +9,8 @@ import 'package:yoseph_ephrem/item_detail_page.dart';
 import 'package:yoseph_ephrem/my_home_page.dart';
 import 'package:yoseph_ephrem/search_product.dart';
 
+import 'features/product/domain/entities/product.dart';
+
 void main() {
   runApp(ChangeNotifierProvider(create: (_) => ProductData(), child: MyApp()));
 }
@@ -26,14 +28,14 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/item-detail':
-            final item = settings.arguments as CardItem;
+            final item = settings.arguments as Product;
 
             return _fadeRoute(ItemDetailPage(item: item));
           case '/':
             return _fadeRoute(const MyHomePage(userName: "yoseph"));
           case '/add-product':
-            if (settings.arguments != null && settings.arguments is CardItem) {
-              final item = settings.arguments as CardItem;
+            if (settings.arguments != null && settings.arguments is Product) {
+              final item = settings.arguments as Product;
               return _fadeRoute(AddProduct(product: item));
             } else {
               return _fadeRoute(const AddProduct());

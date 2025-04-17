@@ -4,6 +4,8 @@ import 'package:yoseph_ephrem/data.dart';
 import 'package:yoseph_ephrem/my_home_page.dart';
 import 'package:yoseph_ephrem/theme.dart';
 
+import 'features/product/domain/entities/product.dart';
+
 class ItemSearchPage extends StatelessWidget {
   const ItemSearchPage({super.key});
 
@@ -64,7 +66,7 @@ class ItemSearchPage extends StatelessWidget {
 class SearchBody extends StatefulWidget {
   const SearchBody({super.key, required this.products});
 
-  final List<CardItem> products;
+  final List<Product> products;
 
   @override
   State<SearchBody> createState() => _SearchBodyState();
@@ -72,7 +74,7 @@ class SearchBody extends StatefulWidget {
 
 class _SearchBodyState extends State<SearchBody> {
   final TextEditingController _searchController = TextEditingController();
-  late List<CardItem> filteredProducts;
+  late List<Product> filteredProducts;
 
   // Persistent filter state
   String selectedCategory = '';
@@ -91,10 +93,10 @@ class _SearchBodyState extends State<SearchBody> {
     setState(() {
       filteredProducts =
           widget.products.where((item) {
-            final matchesQuery = item.title.toLowerCase().contains(query);
+            final matchesQuery = item.name.toLowerCase().contains(query);
             final inCategory =
                 selectedCategory.isEmpty ||
-                item.category.toLowerCase().contains(
+                (item.category ?? "").toLowerCase().contains(
                   selectedCategory.toLowerCase(),
                 );
             final inPriceRange =

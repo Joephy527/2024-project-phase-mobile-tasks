@@ -1,12 +1,11 @@
-import 'package:yoseph_ephrem/domain/repositories/product_repository.dart';
-
-import '../../core/usecases.dart';
+import '../../../../core/usecases.dart';
+import '../repositories/product_repository.dart';
 import '../entities/product.dart';
 
-class CreateProductUsecase implements UseCase<Product, Params> {
+class InsertProduct implements UseCase<Product, Params> {
   final ProductRepository repository;
 
-  CreateProductUsecase(this.repository);
+  InsertProduct(this.repository);
 
   @override
   Future<Product> call(Params params) async {

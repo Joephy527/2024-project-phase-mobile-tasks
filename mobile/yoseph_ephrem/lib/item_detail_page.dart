@@ -6,8 +6,10 @@ import 'package:yoseph_ephrem/data.dart';
 
 import 'package:yoseph_ephrem/theme.dart';
 
+import 'features/product/domain/entities/product.dart';
+
 class ItemDetailPage extends StatelessWidget {
-  final CardItem item;
+  final Product item;
 
   const ItemDetailPage({required this.item, super.key});
 
@@ -63,7 +65,7 @@ class ItemDetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        item.category,
+                        item.category ?? "Men's Shoe",
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimaryGrey,
                         ),
@@ -90,7 +92,7 @@ class ItemDetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        item.title,
+                        item.name,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
@@ -117,7 +119,7 @@ class ItemDetailPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 12.0, key: Key("3")),
-                  Row(children: _buildSizes(item.shoeSize, context)),
+                  Row(children: _buildSizes(item.shoeSize ?? 41, context)),
                   SizedBox(height: 32.0, key: Key("4")),
                   Text(
                     item.description,

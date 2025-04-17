@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:yoseph_ephrem/data.dart';
+import 'package:yoseph_ephrem/features/product/domain/entities/product.dart';
 
 import 'package:yoseph_ephrem/theme.dart';
 
@@ -174,7 +175,7 @@ class HomeBody extends StatelessWidget {
 
 List<GestureDetector> buildGridCards(
   BuildContext context, {
-  required List<CardItem> cardData,
+  required List<Product> cardData,
 }) {
   List<GestureDetector> cards =
       cardData.map((item) {
@@ -216,7 +217,7 @@ List<GestureDetector> buildGridCards(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              item.title,
+                              item.name,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -244,7 +245,7 @@ List<GestureDetector> buildGridCards(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              item.category,
+                              item.category ?? "Men's shoe",
                               style: TextStyle(
                                 fontSize: 12,
                                 color:
