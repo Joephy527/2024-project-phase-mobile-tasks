@@ -1,9 +1,18 @@
-import 'package:yoseph_ephrem/data.dart';
-import 'package:yoseph_ephrem/features/product/domain/entities/product.dart';
-import 'package:yoseph_ephrem/features/product/domain/repositories/product_repository.dart';
+import '../../../../core/platform/network_info.dart';
+import '../../../../data.dart';
+import '../datasoruces/product_local_data_source.dart';
+import '../datasoruces/product_remote_data_source.dart';
+import '../../domain/entities/product.dart';
+import '../../domain/repositories/product_repository.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
+  final ProductRemoteDataSource remoteDataSource;
+  final ProductLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
   final products = ProductData().data;
+
+  ProductRepositoryImpl({ required this.remoteDataSource, required this.localDataSource, required this.networkInfo })
+
 
   @override
   Future<Product> createProduct(Product product) async {
